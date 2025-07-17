@@ -113,34 +113,174 @@ function App() {
               whileHover={{ scale: 1.02 }}
               data-aos="slide-up"
               data-aos-delay={i * 100}
-            />
+            >
+              {/* Add realistic windows to each building */}
+              <div className={`building-windows building-${i + 1}-windows`}>
+                {Array.from({ length: Math.floor(Math.random() * 20) + 10 }, (_, windowIndex) => (
+                  <motion.div
+                    key={`window-${i}-${windowIndex}`}
+                    className="realistic-window"
+                    initial={{ opacity: 0 }}
+                    animate={{ 
+                      opacity: Math.random() > 0.3 ? [0.6, 1, 0.8, 0.9] : [0.2, 0.4, 0.3],
+                      backgroundColor: Math.random() > 0.7 ? 
+                        'rgba(255, 220, 120, 0.8)' : 
+                        'rgba(100, 150, 200, 0.6)'
+                    }}
+                    transition={{
+                      duration: 4 + Math.random() * 6,
+                      delay: Math.random() * 10,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    style={{
+                      left: `${10 + (windowIndex % 6) * 15}%`,
+                      top: `${15 + Math.floor(windowIndex / 6) * 12}%`
+                    }}
+                  />
+                ))}
+              </div>
+              
+              {/* Position Axie Studio sign on building 5 (tallest central building) */}
+              {i === 4 && (
+                <motion.div 
+                  className="axie-studio-on-building"
+                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                  animate={{ 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1,
+                    rotateX: [0, 0.5, 0, -0.3, 0]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    delay: 2,
+                    ease: "easeOut"
+                  }}
+                  data-aos="zoom-in"
+                  data-aos-delay="2000"
+                >
+                  <motion.div 
+                    className="studio-sign-on-building"
+                    animate={{
+                      boxShadow: [
+                        '0 0 15px rgba(255, 100, 150, 0.6), 0 0 30px rgba(100, 200, 255, 0.4)',
+                        '0 0 20px rgba(255, 100, 150, 0.8), 0 0 40px rgba(100, 200, 255, 0.6)',
+                        '0 0 18px rgba(255, 100, 150, 0.7), 0 0 35px rgba(100, 200, 255, 0.5)'
+                      ]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    {/* Enhanced sign frame with metal details */}
+                    <div className="sign-frame-details">
+                      <div className="frame-corner frame-corner-tl" />
+                      <div className="frame-corner frame-corner-tr" />
+                      <div className="frame-corner frame-corner-bl" />
+                      <div className="frame-corner frame-corner-br" />
+                      <div className="frame-edge frame-edge-top" />
+                      <div className="frame-edge frame-edge-bottom" />
+                      <div className="frame-edge frame-edge-left" />
+                      <div className="frame-edge frame-edge-right" />
+                    </div>
+                    
+                    {/* Background panel with texture */}
+                    <div className="sign-background-panel" />
+                    
+                    {/* Main text with enhanced styling */}
+                    <motion.h1 
+                      className="studio-text-on-building"
+                      animate={{
+                        textShadow: [
+                          '0 0 10px rgba(255, 100, 150, 0.8), 0 0 20px rgba(100, 200, 255, 0.6)',
+                          '0 0 15px rgba(255, 100, 150, 1), 0 0 30px rgba(100, 200, 255, 0.8)',
+                          '0 0 12px rgba(255, 100, 150, 0.9), 0 0 25px rgba(100, 200, 255, 0.7)'
+                        ]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      AXIE STUDIO
+                    </motion.h1>
+                    
+                    {/* Enhanced neon tube effects */}
+                    <div className="neon-tubes-building">
+                      {Array.from({ length: 12 }, (_, tubeIndex) => (
+                        <motion.div
+                          key={`tube-building-${tubeIndex}`}
+                          className="neon-tube-building"
+                          animate={{
+                            opacity: [0.6, 1, 0.8, 1],
+                            scale: [1, 1.02, 0.98, 1]
+                          }}
+                          transition={{
+                            duration: 2 + Math.random() * 2,
+                            delay: tubeIndex * 0.2,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                          style={{
+                            left: `${5 + (tubeIndex % 6) * 15}%`,
+                            top: tubeIndex < 6 ? '10%' : '80%',
+                            background: tubeIndex % 2 === 0 ? 
+                              'linear-gradient(90deg, rgba(255, 100, 150, 0.8), rgba(255, 150, 200, 0.6))' :
+                              'linear-gradient(90deg, rgba(100, 200, 255, 0.8), rgba(150, 220, 255, 0.6))'
+                          }}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Enhanced electric sparks */}
+                    <div className="electric-sparks-building">
+                      {Array.from({ length: 15 }, (_, sparkIndex) => (
+                        <motion.div
+                          key={`spark-building-${sparkIndex}`}
+                          className="electric-spark-building"
+                          animate={{
+                            opacity: [0, 1, 0],
+                            scale: [0.5, 1.2, 0.8],
+                            rotate: [0, 180, 360]
+                          }}
+                          transition={{
+                            duration: 0.5 + Math.random() * 0.8,
+                            delay: Math.random() * 4,
+                            repeat: Infinity,
+                            ease: "easeOut"
+                          }}
+                          style={{
+                            left: `${Math.random() * 100}%`,
+                            top: `${Math.random() * 100}%`
+                          }}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Power cables and mounting hardware */}
+                    <div className="sign-hardware">
+                      <div className="power-cable power-cable-1" />
+                      <div className="power-cable power-cable-2" />
+                      <div className="mounting-bracket bracket-left" />
+                      <div className="mounting-bracket bracket-right" />
+                      <div className="support-beam" />
+                    </div>
+                    
+                    {/* Flickering warning lights */}
+                    <div className="warning-lights">
+                      <motion.div 
+                        className="warning-light warning-light-left"
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      />
+                      <motion.div 
+                        className="warning-light warning-light-right"
+                        animate={{ opacity: [1, 0.3, 1] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.75 }}
+                      />
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </motion.div>
           ))}
           
-          {/* Enhanced building lights with more variety */}
-          <div className="city-lights">
-            {Array.from({ length: 40 }, (_, i) => (
-              <motion.div
-                key={`light-${i}`}
-                className="window-light"
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: [0.4, 1, 0.7, 0.9],
-                  scale: [1, 1.1, 0.9, 1.05]
-                }}
-                transition={{
-                  duration: 8 + Math.random() * 4,
-                  delay: Math.random() * 20,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                style={{
-                  left: `${15 + Math.random() * 70}%`,
-                  top: `${30 + Math.random() * 40}%`,
-                  background: `rgba(${255}, ${220 + Math.random() * 35}, ${120 + Math.random() * 80}, 0.8)`
-                }}
-              />
-            ))}
-          </div>
         </motion.div>
         
         {/* Street lamps */}
@@ -167,12 +307,23 @@ function App() {
             transition={{ duration: 15, repeat: Infinity }}
           />
           
+          {/* First car (existing) */}
           <motion.div 
-            className="car moving-car"
+            className="car moving-car car-dynamic-color"
             animate={{
               x: ['-180px', '90vw', '75vw', '50vw', '30vw', '15vw', '-180px'],
               scale: [0.7, 0.85, 0.95, 1.1, 1.05, 0.9, 0.7],
-              rotateY: [0, 2, 0, -1, 0, 1, 0]
+              rotateY: [0, 2, 0, -1, 0, 1, 0],
+              // Dynamic color changes
+              filter: [
+                'hue-rotate(0deg) saturate(1)',
+                'hue-rotate(60deg) saturate(1.2)',
+                'hue-rotate(120deg) saturate(1.1)',
+                'hue-rotate(180deg) saturate(1.3)',
+                'hue-rotate(240deg) saturate(1.1)',
+                'hue-rotate(300deg) saturate(1.2)',
+                'hue-rotate(360deg) saturate(1)'
+              ]
             }}
             transition={{
               duration: 18,
@@ -237,6 +388,86 @@ function App() {
             <div className="taillight taillight-right" />
           </motion.div>
           
+          {/* Second car (new) - different timing and color */}
+          <motion.div 
+            className="car moving-car car-second car-dynamic-color-2"
+            animate={{
+              x: ['-180px', '90vw', '75vw', '50vw', '30vw', '15vw', '-180px'],
+              scale: [0.6, 0.8, 0.9, 1, 0.95, 0.85, 0.6],
+              rotateY: [0, 1, 0, -0.5, 0, 0.5, 0],
+              // Different color cycle for second car
+              filter: [
+                'hue-rotate(180deg) saturate(1.1)',
+                'hue-rotate(240deg) saturate(1.3)',
+                'hue-rotate(300deg) saturate(1.2)',
+                'hue-rotate(0deg) saturate(1)',
+                'hue-rotate(60deg) saturate(1.2)',
+                'hue-rotate(120deg) saturate(1.1)',
+                'hue-rotate(180deg) saturate(1.1)'
+              ]
+            }}
+            transition={{
+              duration: 22,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 10, // Start 10 seconds after first car
+              times: [0, 0.15, 0.3, 0.5, 0.7, 0.85, 1]
+            }}
+          >
+            <motion.div 
+              className="car-body car-body-second"
+              animate={{
+                boxShadow: [
+                  '0 4px 15px rgba(0,0,0,0.6)',
+                  '0 6px 25px rgba(0,0,0,0.8)',
+                  '0 4px 15px rgba(0,0,0,0.6)'
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+            <div className="car-roof car-roof-second" />
+            <div className="car-windshield" />
+            
+            <motion.div 
+              className="car-wheel car-wheel-front"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 0.35, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div 
+              className="car-wheel car-wheel-rear"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 0.35, repeat: Infinity, ease: "linear" }}
+            />
+            
+            <motion.div 
+              className="headlight headlight-left"
+              animate={{ 
+                opacity: [0.8, 1, 0.9, 1],
+                boxShadow: [
+                  '0 0 20px rgba(255,255,200,0.9)',
+                  '0 0 30px rgba(255,255,200,1)',
+                  '0 0 25px rgba(255,255,200,0.95)'
+                ]
+              }}
+              transition={{ duration: 0.25, repeat: Infinity }}
+            />
+            <motion.div 
+              className="headlight headlight-right"
+              animate={{ 
+                opacity: [0.9, 1, 0.8, 1],
+                boxShadow: [
+                  '0 0 20px rgba(255,255,200,0.9)',
+                  '0 0 30px rgba(255,255,200,1)',
+                  '0 0 25px rgba(255,255,200,0.95)'
+                ]
+              }}
+              transition={{ duration: 0.25, repeat: Infinity, delay: 0.1 }}
+            />
+            
+            <div className="taillight taillight-left" />
+            <div className="taillight taillight-right" />
+          </motion.div>
+          
           {/* Enhanced street reflections */}
           <div className="street-reflections">
             <motion.div 
@@ -250,6 +481,22 @@ function App() {
                 duration: 18,
                 repeat: Infinity,
                 ease: "easeInOut"
+              }}
+            />
+            
+            {/* Second car reflection */}
+            <motion.div 
+              className="reflection car-reflection car-reflection-second"
+              animate={{
+                x: ['-180px', '90vw', '75vw', '50vw', '30vw', '15vw', '-180px'],
+                opacity: [0.08, 0.18, 0.22, 0.28, 0.22, 0.18, 0.08],
+                scaleY: [0.4, 0.55, 0.65, 0.75, 0.65, 0.55, 0.4]
+              }}
+              transition={{
+                duration: 22,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 10
               }}
             />
           </div>
