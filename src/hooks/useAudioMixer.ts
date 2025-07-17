@@ -89,6 +89,7 @@ export const useAudioMixer = () => {
   };
 
   const startAudioSystemWithInteraction = () => {
+    console.log('User interaction detected - enabling audio system');
     hasUserInteractedRef.current = true;
     startAudioSystem();
   };
