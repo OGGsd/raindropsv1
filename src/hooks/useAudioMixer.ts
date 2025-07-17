@@ -18,7 +18,7 @@ export const useAudioMixer = () => {
   const FADE_DURATION = 3; // 3 seconds fade
   const NUM_RAIN_INSTANCES = 4; // 4 instances for rain rotation
   const THUNDERSTORM_INTERVAL = 15000; // Play thunderstorm every 15 seconds
-  const THUNDERSTORM_VOLUME = 0.4; // Lower volume for thunderstorm overlay
+  const THUNDERSTORM_VOLUME = 0.7; // Increased volume for more prominent thunder
 
   const rainAudioFiles = [
     '/11L-medium_sound_raining-1752763639584.mp3',

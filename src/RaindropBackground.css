@@ -200,15 +200,15 @@
 /* Axie Studio sign on building */
 .axie-studio-on-building {
   position: absolute;
-  top: 25%;
+  top: 20%;
   left: 50%;
   transform: translateX(-50%);
-  width: 70px;
-  height: 20px;
+  width: 80px;
+  height: 24px;
   z-index: 5;
   perspective: 1000px;
   /* Better integration with building structure */
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.8));
 }
 
 .studio-sign-on-building {
@@ -216,26 +216,27 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg,
-    rgba(12, 12, 18, 0.98) 0%,
-    rgba(20, 20, 28, 0.96) 25%,
-    rgba(28, 28, 38, 0.94) 50%,
-    rgba(22, 22, 32, 0.96) 75%,
-    rgba(15, 15, 22, 0.98) 100%);
-  border: 1px solid rgba(100, 200, 255, 0.9);
-  border-radius: 3px;
+    rgba(8, 8, 12, 0.99) 0%,
+    rgba(15, 15, 20, 0.98) 25%,
+    rgba(22, 22, 30, 0.96) 50%,
+    rgba(18, 18, 25, 0.98) 75%,
+    rgba(10, 10, 15, 0.99) 100%);
+  border: 1.5px solid rgba(100, 200, 255, 0.95);
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   box-shadow: 
-    0 0 15px rgba(255, 100, 150, 0.8),
-    0 0 30px rgba(100, 200, 255, 0.6),
-    0 2px 8px rgba(0, 0, 0, 0.8),
-    inset 0 0 12px rgba(0, 0, 0, 0.9),
-    inset 0 1px 1px rgba(255, 255, 255, 0.15),
-    inset 0 -1px 1px rgba(0, 0, 0, 0.5);
+    0 0 20px rgba(255, 100, 150, 0.9),
+    0 0 40px rgba(100, 200, 255, 0.7),
+    0 0 60px rgba(255, 150, 200, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.9),
+    inset 0 0 15px rgba(0, 0, 0, 0.95),
+    inset 0 2px 2px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.6);
   /* Better building integration */
-  transform: perspective(500px) rotateX(2deg);
+  transform: perspective(600px) rotateX(3deg) rotateY(1deg);
 }
 
 /* Enhanced sign frame details */
@@ -309,20 +310,21 @@
 
 .studio-text-on-building {
   font-family: 'Arial Black', Arial, sans-serif;
-  font-size: 0.4rem;
+  font-size: 0.45rem;
   font-weight: 900;
   color: #ffffff;
   text-align: center;
-  letter-spacing: 0.25px;
+  letter-spacing: 0.3px;
   margin: 0;
   position: relative;
   z-index: 2;
   text-shadow: 
-    0 0 3px rgba(255, 100, 150, 1),
-    0 0 6px rgba(100, 200, 255, 0.8),
-    0 0 9px rgba(255, 150, 200, 0.6),
-    0 1px 2px rgba(0, 0, 0, 1),
-    0 0 1px rgba(255, 255, 255, 0.3);
+    0 0 4px rgba(255, 100, 150, 1),
+    0 0 8px rgba(100, 200, 255, 0.9),
+    0 0 12px rgba(255, 150, 200, 0.7),
+    0 0 16px rgba(255, 100, 150, 0.5),
+    0 2px 3px rgba(0, 0, 0, 1),
+    0 0 2px rgba(255, 255, 255, 0.4);
   background: linear-gradient(45deg,
     #ff6496 0%,
     #64c8ff 25%,
@@ -335,7 +337,7 @@
   background-clip: text;
   animation: gradientShift 3s ease-in-out infinite;
   /* Subtle depth effect */
-  transform: translateZ(1px);
+  transform: translateZ(2px);
 }
 
 .neon-tubes-building {
