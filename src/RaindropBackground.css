@@ -465,7 +465,6 @@
 
 .warning-light-left { left: 5%; }
 .warning-light-right { right: 5%; }
-}
 
 @keyframes gradientShift {
   0%, 100% { background-position: 0% 50%; }
