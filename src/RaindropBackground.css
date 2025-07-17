@@ -203,8 +203,8 @@
   top: 40%;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 18px;
+  width: 80px;
+  height: 24px;
   z-index: 5;
   perspective: 1000px;
 }
@@ -214,33 +214,107 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg,
-    rgba(20, 20, 30, 0.95) 0%,
-    rgba(30, 30, 40, 0.9) 50%,
-    rgba(15, 15, 25, 0.98) 100%);
-  border: 2px solid rgba(100, 200, 255, 0.6);
-  border-radius: 8px;
+    rgba(15, 15, 20, 0.98) 0%,
+    rgba(25, 25, 35, 0.95) 30%,
+    rgba(35, 35, 45, 0.9) 70%,
+    rgba(20, 20, 30, 0.98) 100%);
+  border: 1px solid rgba(100, 200, 255, 0.8);
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   box-shadow: 
-    0 0 15px rgba(255, 100, 150, 0.6),
-    0 0 30px rgba(100, 200, 255, 0.4),
-    inset 0 0 20px rgba(0, 0, 0, 0.8);
+    0 0 20px rgba(255, 100, 150, 0.7),
+    0 0 40px rgba(100, 200, 255, 0.5),
+    inset 0 0 15px rgba(0, 0, 0, 0.9),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced sign frame details */
+.sign-frame-details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.frame-corner {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: linear-gradient(45deg, 
+    rgba(150, 150, 160, 0.9) 0%, 
+    rgba(100, 100, 110, 0.8) 100%);
+  border-radius: 1px;
+}
+
+.frame-corner-tl { top: 1px; left: 1px; }
+.frame-corner-tr { top: 1px; right: 1px; }
+.frame-corner-bl { bottom: 1px; left: 1px; }
+.frame-corner-br { bottom: 1px; right: 1px; }
+
+.frame-edge {
+  position: absolute;
+  background: linear-gradient(90deg, 
+    rgba(120, 120, 130, 0.6) 0%, 
+    rgba(80, 80, 90, 0.8) 50%, 
+    rgba(120, 120, 130, 0.6) 100%);
+}
+
+.frame-edge-top, .frame-edge-bottom {
+  height: 1px;
+  width: calc(100% - 6px);
+  left: 3px;
+}
+
+.frame-edge-top { top: 0; }
+.frame-edge-bottom { bottom: 0; }
+
+.frame-edge-left, .frame-edge-right {
+  width: 1px;
+  height: calc(100% - 6px);
+  top: 3px;
+}
+
+.frame-edge-left { left: 0; }
+.frame-edge-right { right: 0; }
+
+/* Sign background panel */
+.sign-background-panel {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background: 
+    radial-gradient(ellipse at 30% 30%, rgba(40, 40, 50, 0.8) 0%, transparent 70%),
+    radial-gradient(ellipse at 70% 70%, rgba(30, 30, 40, 0.6) 0%, transparent 60%),
+    linear-gradient(135deg, 
+      rgba(25, 25, 35, 0.9) 0%, 
+      rgba(20, 20, 30, 0.95) 50%, 
+      rgba(15, 15, 25, 0.98) 100%);
+  border-radius: 2px;
+  border: 0.5px solid rgba(60, 60, 70, 0.4);
 }
 
 .studio-text-on-building {
   font-family: 'Arial Black', Arial, sans-serif;
-  font-size: 0.4rem;
+  font-size: 0.45rem;
   font-weight: 900;
   color: #ffffff;
   text-align: center;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   margin: 0;
+  position: relative;
+  z-index: 2;
   text-shadow: 
-    0 0 3px rgba(255, 100, 150, 0.8),
-    0 0 6px rgba(100, 200, 255, 0.6),
-    0 1px 2px rgba(0, 0, 0, 0.8);
+    0 0 4px rgba(255, 100, 150, 0.9),
+    0 0 8px rgba(100, 200, 255, 0.7),
+    0 0 12px rgba(255, 150, 200, 0.5),
+    0 1px 3px rgba(0, 0, 0, 0.9);
   background: linear-gradient(45deg,
     #ff6496 0%,
     #64c8ff 25%,
@@ -265,14 +339,13 @@
 
 .neon-tube-building {
   position: absolute;
-  top: 1px;
-  width: 1px;
-  height: 1px;
+  width: 2px;
+  height: 2px;
   border-radius: 50%;
   box-shadow: 
-    0 0 5px currentColor,
-    0 0 10px currentColor,
-    0 0 15px currentColor;
+    0 0 3px currentColor,
+    0 0 6px currentColor,
+    0 0 9px currentColor;
 }
 
 .electric-sparks-building {
@@ -282,20 +355,116 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  z-index: 3;
 }
 
 .electric-spark-building {
   position: absolute;
-  width: 0.5px;
-  height: 0.5px;
+  width: 1px;
+  height: 1px;
   background: radial-gradient(circle,
     rgba(255, 255, 255, 1) 0%,
     rgba(100, 200, 255, 0.8) 50%,
     transparent 100%);
   border-radius: 50%;
   box-shadow: 
-    0 0 1px rgba(255, 255, 255, 0.8),
-    0 0 2px rgba(100, 200, 255, 0.6);
+    0 0 2px rgba(255, 255, 255, 0.9),
+    0 0 4px rgba(100, 200, 255, 0.7),
+    0 0 6px rgba(255, 150, 200, 0.5);
+}
+
+/* Sign hardware details */
+.sign-hardware {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.power-cable {
+  position: absolute;
+  background: linear-gradient(90deg, 
+    rgba(40, 40, 45, 0.9) 0%, 
+    rgba(30, 30, 35, 1) 50%, 
+    rgba(40, 40, 45, 0.9) 100%);
+  border-radius: 1px;
+}
+
+.power-cable-1 {
+  top: -2px;
+  right: 10%;
+  width: 1px;
+  height: 8px;
+  transform: rotate(15deg);
+}
+
+.power-cable-2 {
+  bottom: -2px;
+  left: 15%;
+  width: 1px;
+  height: 6px;
+  transform: rotate(-20deg);
+}
+
+.mounting-bracket {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 8px;
+  background: linear-gradient(180deg, 
+    rgba(80, 80, 90, 0.9) 0%, 
+    rgba(60, 60, 70, 1) 50%, 
+    rgba(80, 80, 90, 0.9) 100%);
+  border-radius: 1px;
+}
+
+.bracket-left { left: -1px; }
+.bracket-right { right: -1px; }
+
+.support-beam {
+  position: absolute;
+  bottom: -1px;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(70, 70, 80, 0.8) 50%, 
+    transparent 100%);
+}
+
+/* Warning lights */
+.warning-lights {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.warning-light {
+  position: absolute;
+  top: 2px;
+  width: 2px;
+  height: 2px;
+  background: radial-gradient(circle,
+    rgba(255, 50, 50, 1) 0%,
+    rgba(255, 100, 100, 0.8) 50%,
+    transparent 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 3px rgba(255, 50, 50, 0.8),
+    0 0 6px rgba(255, 100, 100, 0.4);
+}
+
+.warning-light-left { left: 5%; }
+.warning-light-right { right: 5%; }
 }
 
 @keyframes gradientShift {
@@ -303,6 +472,16 @@
   50% { background-position: 100% 50%; }
 }
 
+/* Dynamic car color effects */
+.car-dynamic-color .car-body,
+.car-dynamic-color .car-roof {
+  transition: filter 0.5s ease-in-out;
+}
+
+.car-dynamic-color-2 .car-body,
+.car-dynamic-color-2 .car-roof {
+  transition: filter 0.5s ease-in-out;
+}
 /* Second car styling */
 .car-second {
   bottom: 35%; /* Slightly different position */

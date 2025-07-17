@@ -171,6 +171,22 @@ function App() {
                     }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   >
+                    {/* Enhanced sign frame with metal details */}
+                    <div className="sign-frame-details">
+                      <div className="frame-corner frame-corner-tl" />
+                      <div className="frame-corner frame-corner-tr" />
+                      <div className="frame-corner frame-corner-bl" />
+                      <div className="frame-corner frame-corner-br" />
+                      <div className="frame-edge frame-edge-top" />
+                      <div className="frame-edge frame-edge-bottom" />
+                      <div className="frame-edge frame-edge-left" />
+                      <div className="frame-edge frame-edge-right" />
+                    </div>
+                    
+                    {/* Background panel with texture */}
+                    <div className="sign-background-panel" />
+                    
+                    {/* Main text with enhanced styling */}
                     <motion.h1 
                       className="studio-text-on-building"
                       animate={{
@@ -185,9 +201,9 @@ function App() {
                       AXIE STUDIO
                     </motion.h1>
                     
-                    {/* Smaller neon tube effects */}
+                    {/* Enhanced neon tube effects */}
                     <div className="neon-tubes-building">
-                      {Array.from({ length: 6 }, (_, tubeIndex) => (
+                      {Array.from({ length: 12 }, (_, tubeIndex) => (
                         <motion.div
                           key={`tube-building-${tubeIndex}`}
                           className="neon-tube-building"
@@ -202,7 +218,8 @@ function App() {
                             ease: "easeInOut"
                           }}
                           style={{
-                            left: `${15 + tubeIndex * 12}%`,
+                            left: `${5 + (tubeIndex % 6) * 15}%`,
+                            top: tubeIndex < 6 ? '10%' : '80%',
                             background: tubeIndex % 2 === 0 ? 
                               'linear-gradient(90deg, rgba(255, 100, 150, 0.8), rgba(255, 150, 200, 0.6))' :
                               'linear-gradient(90deg, rgba(100, 200, 255, 0.8), rgba(150, 220, 255, 0.6))'
@@ -211,9 +228,9 @@ function App() {
                       ))}
                     </div>
                     
-                    {/* Smaller electric sparks */}
+                    {/* Enhanced electric sparks */}
                     <div className="electric-sparks-building">
-                      {Array.from({ length: 8 }, (_, sparkIndex) => (
+                      {Array.from({ length: 15 }, (_, sparkIndex) => (
                         <motion.div
                           key={`spark-building-${sparkIndex}`}
                           className="electric-spark-building"
@@ -234,6 +251,29 @@ function App() {
                           }}
                         />
                       ))}
+                    </div>
+                    
+                    {/* Power cables and mounting hardware */}
+                    <div className="sign-hardware">
+                      <div className="power-cable power-cable-1" />
+                      <div className="power-cable power-cable-2" />
+                      <div className="mounting-bracket bracket-left" />
+                      <div className="mounting-bracket bracket-right" />
+                      <div className="support-beam" />
+                    </div>
+                    
+                    {/* Flickering warning lights */}
+                    <div className="warning-lights">
+                      <motion.div 
+                        className="warning-light warning-light-left"
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      />
+                      <motion.div 
+                        className="warning-light warning-light-right"
+                        animate={{ opacity: [1, 0.3, 1] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.75 }}
+                      />
                     </div>
                   </motion.div>
                 </motion.div>
@@ -269,11 +309,21 @@ function App() {
           
           {/* First car (existing) */}
           <motion.div 
-            className="car moving-car"
+            className="car moving-car car-dynamic-color"
             animate={{
               x: ['-180px', '90vw', '75vw', '50vw', '30vw', '15vw', '-180px'],
               scale: [0.7, 0.85, 0.95, 1.1, 1.05, 0.9, 0.7],
-              rotateY: [0, 2, 0, -1, 0, 1, 0]
+              rotateY: [0, 2, 0, -1, 0, 1, 0],
+              // Dynamic color changes
+              filter: [
+                'hue-rotate(0deg) saturate(1)',
+                'hue-rotate(60deg) saturate(1.2)',
+                'hue-rotate(120deg) saturate(1.1)',
+                'hue-rotate(180deg) saturate(1.3)',
+                'hue-rotate(240deg) saturate(1.1)',
+                'hue-rotate(300deg) saturate(1.2)',
+                'hue-rotate(360deg) saturate(1)'
+              ]
             }}
             transition={{
               duration: 18,
@@ -340,11 +390,21 @@ function App() {
           
           {/* Second car (new) - different timing and color */}
           <motion.div 
-            className="car moving-car car-second"
+            className="car moving-car car-second car-dynamic-color-2"
             animate={{
               x: ['-180px', '90vw', '75vw', '50vw', '30vw', '15vw', '-180px'],
               scale: [0.6, 0.8, 0.9, 1, 0.95, 0.85, 0.6],
-              rotateY: [0, 1, 0, -0.5, 0, 0.5, 0]
+              rotateY: [0, 1, 0, -0.5, 0, 0.5, 0],
+              // Different color cycle for second car
+              filter: [
+                'hue-rotate(180deg) saturate(1.1)',
+                'hue-rotate(240deg) saturate(1.3)',
+                'hue-rotate(300deg) saturate(1.2)',
+                'hue-rotate(0deg) saturate(1)',
+                'hue-rotate(60deg) saturate(1.2)',
+                'hue-rotate(120deg) saturate(1.1)',
+                'hue-rotate(180deg) saturate(1.1)'
+              ]
             }}
             transition={{
               duration: 22,
