@@ -146,6 +146,110 @@ function App() {
         {/* Street lamps */}
         <StreetLamps />
         
+        {/* Axie Studio backdrop */}
+        <motion.div 
+          className="axie-studio-backdrop"
+          initial={{ opacity: 0, y: 30, scale: 0.8 }}
+          animate={{ 
+            opacity: 1, 
+            y: 0, 
+            scale: 1,
+            rotateX: [0, 0.5, 0, -0.3, 0]
+          }}
+          transition={{ 
+            duration: 3, 
+            delay: 2,
+            ease: "easeOut"
+          }}
+          data-aos="zoom-in"
+          data-aos-delay="2000"
+        >
+          <motion.div 
+            className="studio-sign"
+            animate={{
+              boxShadow: [
+                '0 0 30px rgba(255, 100, 150, 0.6), 0 0 60px rgba(100, 200, 255, 0.4)',
+                '0 0 40px rgba(255, 100, 150, 0.8), 0 0 80px rgba(100, 200, 255, 0.6)',
+                '0 0 35px rgba(255, 100, 150, 0.7), 0 0 70px rgba(100, 200, 255, 0.5)'
+              ]
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <motion.h1 
+              className="studio-text"
+              animate={{
+                textShadow: [
+                  '0 0 20px rgba(255, 100, 150, 0.8), 0 0 40px rgba(100, 200, 255, 0.6)',
+                  '0 0 30px rgba(255, 100, 150, 1), 0 0 60px rgba(100, 200, 255, 0.8)',
+                  '0 0 25px rgba(255, 100, 150, 0.9), 0 0 50px rgba(100, 200, 255, 0.7)'
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              AXIE STUDIO
+            </motion.h1>
+            
+            {/* Neon tube effects */}
+            <div className="neon-tubes">
+              {Array.from({ length: 8 }, (_, i) => (
+                <motion.div
+                  key={`tube-${i}`}
+                  className="neon-tube"
+                  animate={{
+                    opacity: [0.6, 1, 0.8, 1],
+                    scale: [1, 1.02, 0.98, 1]
+                  }}
+                  transition={{
+                    duration: 2 + Math.random() * 2,
+                    delay: i * 0.2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  style={{
+                    left: `${10 + i * 10}%`,
+                    background: i % 2 === 0 ? 
+                      'linear-gradient(90deg, rgba(255, 100, 150, 0.8), rgba(255, 150, 200, 0.6))' :
+                      'linear-gradient(90deg, rgba(100, 200, 255, 0.8), rgba(150, 220, 255, 0.6))'
+                  }}
+                />
+              ))}
+            </div>
+            
+            {/* Electric sparks */}
+            <div className="electric-sparks">
+              {Array.from({ length: 12 }, (_, i) => (
+                <motion.div
+                  key={`spark-${i}`}
+                  className="electric-spark"
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0.5, 1.2, 0.8],
+                    rotate: [0, 180, 360]
+                  }}
+                  transition={{
+                    duration: 0.5 + Math.random() * 0.8,
+                    delay: Math.random() * 4,
+                    repeat: Infinity,
+                    ease: "easeOut"
+                  }}
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`
+                  }}
+                />
+              ))}
+            </div>
+          </motion.div>
+          
+          {/* Studio backdrop frame */}
+          <div className="studio-frame">
+            <div className="frame-corner frame-top-left" />
+            <div className="frame-corner frame-top-right" />
+            <div className="frame-corner frame-bottom-left" />
+            <div className="frame-corner frame-bottom-right" />
+          </div>
+        </motion.div>
+        
         {/* Enhanced street and car */}
         <motion.div 
           className="street"

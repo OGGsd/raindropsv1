@@ -187,6 +187,160 @@
   75% { opacity: 0.9; }
 }
 
+/* Axie Studio backdrop */
+.axie-studio-backdrop {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 120px;
+  z-index: 4;
+  perspective: 1000px;
+}
+
+.studio-sign {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,
+    rgba(20, 20, 30, 0.95) 0%,
+    rgba(30, 30, 40, 0.9) 50%,
+    rgba(15, 15, 25, 0.98) 100%);
+  border: 3px solid rgba(100, 200, 255, 0.6);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 
+    0 0 30px rgba(255, 100, 150, 0.6),
+    0 0 60px rgba(100, 200, 255, 0.4),
+    inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.studio-text {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-align: center;
+  letter-spacing: 4px;
+  margin: 0;
+  text-shadow: 
+    0 0 20px rgba(255, 100, 150, 0.8),
+    0 0 40px rgba(100, 200, 255, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(45deg,
+    #ff6496 0%,
+    #64c8ff 25%,
+    #ff96c8 50%,
+    #96dcff 75%,
+    #ff6496 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.neon-tubes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.neon-tube {
+  position: absolute;
+  top: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 
+    0 0 10px currentColor,
+    0 0 20px currentColor,
+    0 0 30px currentColor;
+}
+
+.electric-sparks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.electric-spark {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: radial-gradient(circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(100, 200, 255, 0.8) 50%,
+    transparent 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 6px rgba(255, 255, 255, 0.8),
+    0 0 12px rgba(100, 200, 255, 0.6);
+}
+
+.studio-frame {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  pointer-events: none;
+}
+
+.frame-corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(255, 100, 150, 0.8);
+}
+
+.frame-top-left {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 8px 0 0 0;
+}
+
+.frame-top-right {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+  border-radius: 0 8px 0 0;
+}
+
+.frame-bottom-left {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+  border-radius: 0 0 0 8px;
+}
+
+.frame-bottom-right {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+  border-radius: 0 0 8px 0;
+}
+
 /* Street and road */
 .street {
   position: absolute;
