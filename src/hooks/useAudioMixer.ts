@@ -8,6 +8,7 @@ export const useAudioMixer = () => {
   const isPlayingRef = useRef(false);
   const rainOverlapTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const thunderstormTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hasUserInteractedRef = useRef(false);
   
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -85,15 +86,16 @@ export const useAudioMixer = () => {
     
     setIsLoaded(true);
     console.log(`${NUM_RAIN_INSTANCES} rain instances + 1 thunderstorm instance loaded and ready`);
-    
-    // Auto-start after brief delay
-    setTimeout(() => {
-      startAudioSystem();
-    }, 500);
+  };
+
+  const startAudioSystemWithInteraction = () => {
+    console.log('User interaction detected - enabling audio system');
+    hasUserInteractedRef.current = true;
+    startAudioSystem();
   };
 
   const startAudioSystem = () => {
-    if (isPlayingRef.current) return;
+    if (isPlayingRef.current || !hasUserInteractedRef.current) return;
     
     console.log('Starting rain + thunderstorm audio system...');
     isPlayingRef.current = true;
@@ -405,7 +407,7 @@ export const useAudioMixer = () => {
   return {
     isPlaying,
     isLoaded,
-    startMixedPlayback: startAudioSystem,
+    startMixedPlayback: startAudioSystemWithInteraction,
     stopMixedPlayback: stopAudioSystem,
     config: {
       masterVolume: 0.7,
