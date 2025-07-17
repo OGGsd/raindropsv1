@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 import { useAudioMixer } from './hooks/useAudioMixer';
 import { EnhancedAnimations, FloatingParticles, AdvancedRipples } from './components/EnhancedAnimations';
 import { AdvancedLighting, StreetLamps } from './components/AdvancedLighting';
+import { AudioControl } from './components/AudioControl';
 import './RaindropBackground.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 function App() {
-  const { isPlaying, isLoaded } = useAudioMixer();
+  const { isLoaded } = useAudioMixer();
 
   useEffect(() => {
     AOS.init({
@@ -601,22 +602,7 @@ function App() {
         </div>
         
         {/* Audio status indicator (subtle) */}
-        {isLoaded && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isPlaying ? 0.3 : 0.1 }}
-            style={{
-              position: 'fixed',
-              bottom: '20px',
-              right: '20px',
-              width: '8px',
-              height: '8px',
-              borderRadius: '50%',
-              background: isPlaying ? 'rgba(0, 255, 0, 0.5)' : 'rgba(255, 255, 0, 0.5)',
-              zIndex: 1000
-            }}
-          />
-        )}
+        <AudioControl />
       </div>
     </EnhancedAnimations>
   );
