@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 export const useAudioMixer = () => {
+  // All hooks must be declared at the top level in consistent order
   const rainAudioInstancesRef = useRef<HTMLAudioElement[]>([]);
   const thunderstormAudioRef = useRef<HTMLAudioElement | null>(null);
   const currentRainIndexRef = useRef(0);
@@ -10,6 +11,7 @@ export const useAudioMixer = () => {
   
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  
 
   // Configuration for overlapping
   const OVERLAP_DURATION = 5; // 5 seconds overlap
