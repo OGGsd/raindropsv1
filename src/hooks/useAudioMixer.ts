@@ -15,9 +15,9 @@ export const useAudioMixer = () => {
   const NUM_INSTANCES = 6; // 6 instances for smooth rotation
 
   const audioFiles = [
-    './11L-medium_sound_raining-1752763639584.mp3',
-    './11L-medium_sound_raining-1752764780047.mp3',
-    './11L-prominant_high_quali-1752771174951.mp3'
+    '/11L-medium_sound_raining-1752763639584.mp3',
+    '/11L-medium_sound_raining-1752764780047.mp3',
+    '/11L-prominant_high_quali-1752771174951.mp3'
   ];
 
   useEffect(() => {
