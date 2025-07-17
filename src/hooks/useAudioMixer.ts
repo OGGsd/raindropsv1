@@ -1,37 +1,45 @@
 import { useEffect, useRef, useState } from 'react';
 
 export const useAudioMixer = () => {
-  const audioInstancesRef = useRef<HTMLAudioElement[]>([]);
-  const currentIndexRef = useRef(0);
+  // All hooks must be declared at the top level in consistent order
+  const rainAudioInstancesRef = useRef<HTMLAudioElement[]>([]);
+  const thunderstormAudioRef = useRef<HTMLAudioElement | null>(null);
+  const currentRainIndexRef = useRef(0);
   const isPlayingRef = useRef(false);
-  const overlapTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const rainOverlapTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const thunderstormTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  
 
   // Configuration for overlapping
   const OVERLAP_DURATION = 5; // 5 seconds overlap
   const FADE_DURATION = 3; // 3 seconds fade
-  const NUM_INSTANCES = 6; // 6 instances for smooth rotation
+  const NUM_RAIN_INSTANCES = 4; // 4 instances for rain rotation
+  const THUNDERSTORM_INTERVAL = 15000; // Play thunderstorm every 15 seconds
+  const THUNDERSTORM_VOLUME = 0.7; // Increased volume for more prominent thunder
 
-  const audioFiles = [
-    './11L-medium_sound_raining-1752763639584.mp3',
-    './11L-medium_sound_raining-1752764780047.mp3'
+  const rainAudioFiles = [
+    '/11L-medium_sound_raining-1752763639584.mp3',
+    '/11L-medium_sound_raining-1752764780047.mp3'
   ];
+  
+  const thunderstormAudioFile = '/11L-prominant_high_quali-1752771174951.mp3';
 
   useEffect(() => {
-    initializeOverlappingAudio();
+    initializeAudioSystem();
     return cleanup;
   }, []);
 
-  const initializeOverlappingAudio = async () => {
-    console.log('Initializing overlapping audio system...');
+  const initializeAudioSystem = async () => {
+    console.log('Initializing rain + thunderstorm audio system...');
     
-    // Create multiple instances of each audio file
-    audioInstancesRef.current = [];
+    // Create multiple instances of rain audio files
+    rainAudioInstancesRef.current = [];
     
-    for (let i = 0; i < NUM_INSTANCES; i++) {
-      const audio = new Audio(audioFiles[i % audioFiles.length]);
+    for (let i = 0; i < NUM_RAIN_INSTANCES; i++) {
+      const audio = new Audio(rainAudioFiles[i % rainAudioFiles.length]);
       
       // Critical settings for gapless playback
       audio.preload = 'auto';
@@ -52,37 +60,60 @@ export const useAudioMixer = () => {
         }
       });
       
-      audioInstancesRef.current.push(audio);
+      rainAudioInstancesRef.current.push(audio);
     }
     
+    // Create thunderstorm audio instance
+    thunderstormAudioRef.current = new Audio(thunderstormAudioFile);
+    thunderstormAudioRef.current.preload = 'auto';
+    thunderstormAudioRef.current.volume = 0;
+    thunderstormAudioRef.current.loop = false;
+    
+    // Ensure thunderstorm audio is ready
+    await new Promise<void>((resolve) => {
+      const onCanPlay = () => {
+        thunderstormAudioRef.current?.removeEventListener('canplaythrough', onCanPlay);
+        resolve();
+      };
+      
+      if (thunderstormAudioRef.current?.readyState >= 4) {
+        resolve();
+      } else {
+        thunderstormAudioRef.current?.addEventListener('canplaythrough', onCanPlay);
+      }
+    });
+    
     setIsLoaded(true);
-    console.log(`${NUM_INSTANCES} audio instances loaded and ready`);
+    console.log(`${NUM_RAIN_INSTANCES} rain instances + 1 thunderstorm instance loaded and ready`);
     
     // Auto-start after brief delay
     setTimeout(() => {
-      startOverlappingPlayback();
+      startAudioSystem();
     }, 500);
   };
 
-  const startOverlappingPlayback = () => {
+  const startAudioSystem = () => {
     if (isPlayingRef.current) return;
     
-    console.log('Starting overlapping audio playback...');
+    console.log('Starting rain + thunderstorm audio system...');
     isPlayingRef.current = true;
     setIsPlaying(true);
-    currentIndexRef.current = 0;
+    currentRainIndexRef.current = 0;
     
-    // Start first track
-    playTrackWithOverlap(0);
+    // Start rain audio loop
+    playRainWithOverlap(0);
+    
+    // Start thunderstorm overlay system
+    scheduleThunderstormOverlay();
   };
 
-  const playTrackWithOverlap = (instanceIndex: number) => {
+  const playRainWithOverlap = (instanceIndex: number) => {
     if (!isPlayingRef.current) return;
     
-    const currentAudio = audioInstancesRef.current[instanceIndex];
+    const currentAudio = rainAudioInstancesRef.current[instanceIndex];
     if (!currentAudio) return;
     
-    console.log(`Playing track ${instanceIndex}`);
+    console.log(`Playing rain track ${instanceIndex}`);
     
     // Reset and start current track
     currentAudio.currentTime = 0;
@@ -90,40 +121,40 @@ export const useAudioMixer = () => {
     
     currentAudio.play().then(() => {
       // Fade in current track
-      fadeIn(currentAudio);
+      fadeIn(currentAudio, 0.7);
       
       // Calculate when to start next track (with overlap)
       const trackDuration = currentAudio.duration;
       const nextStartTime = (trackDuration - OVERLAP_DURATION) * 1000;
       
-      console.log(`Track ${instanceIndex} duration: ${trackDuration}s, next starts in: ${nextStartTime/1000}s`);
+      console.log(`Rain track ${instanceIndex} duration: ${trackDuration}s, next starts in: ${nextStartTime/1000}s`);
       
       // Schedule next track to start with overlap
-      overlapTimeoutRef.current = setTimeout(() => {
+      rainOverlapTimeoutRef.current = setTimeout(() => {
         if (isPlayingRef.current) {
-          const nextIndex = (instanceIndex + 1) % audioInstancesRef.current.length;
+          const nextIndex = (instanceIndex + 1) % rainAudioInstancesRef.current.length;
           
           // Start next track overlapping with current
-          startOverlappingTrack(nextIndex, currentAudio);
+          startOverlappingRainTrack(nextIndex, currentAudio);
           
           // Continue the cycle
-          playTrackWithOverlap(nextIndex);
+          playRainWithOverlap(nextIndex);
         }
       }, nextStartTime);
       
     }).catch((error) => {
-      console.error(`Error playing track ${instanceIndex}:`, error);
+      console.error(`Error playing rain track ${instanceIndex}:`, error);
       // Try next track if current fails
-      const nextIndex = (instanceIndex + 1) % audioInstancesRef.current.length;
-      setTimeout(() => playTrackWithOverlap(nextIndex), 100);
+      const nextIndex = (instanceIndex + 1) % rainAudioInstancesRef.current.length;
+      setTimeout(() => playRainWithOverlap(nextIndex), 100);
     });
   };
 
-  const startOverlappingTrack = (nextIndex: number, currentAudio: HTMLAudioElement) => {
-    const nextAudio = audioInstancesRef.current[nextIndex];
+  const startOverlappingRainTrack = (nextIndex: number, currentAudio: HTMLAudioElement) => {
+    const nextAudio = rainAudioInstancesRef.current[nextIndex];
     if (!nextAudio || !isPlayingRef.current) return;
     
-    console.log(`Starting overlapping track ${nextIndex}`);
+    console.log(`Starting overlapping rain track ${nextIndex}`);
     
     // Start next track silently
     nextAudio.currentTime = 0;
@@ -131,16 +162,58 @@ export const useAudioMixer = () => {
     
     nextAudio.play().then(() => {
       // Crossfade: fade out current, fade in next
-      crossfade(currentAudio, nextAudio);
+      crossfade(currentAudio, nextAudio, 0.7, 0.7);
     }).catch((error) => {
-      console.error(`Error starting overlapping track ${nextIndex}:`, error);
+      console.error(`Error starting overlapping rain track ${nextIndex}:`, error);
     });
   };
 
-  const fadeIn = (audio: HTMLAudioElement) => {
+  const scheduleThunderstormOverlay = () => {
+    if (!isPlayingRef.current) return;
+    
+    // Random interval between 10-20 seconds for more natural thunderstorm timing
+    const randomInterval = 10000 + Math.random() * 10000;
+    
+    thunderstormTimeoutRef.current = setTimeout(() => {
+      if (isPlayingRef.current) {
+        playThunderstormOverlay();
+        scheduleThunderstormOverlay(); // Schedule next thunderstorm
+      }
+    }, randomInterval);
+  };
+  
+  const playThunderstormOverlay = () => {
+    if (!thunderstormAudioRef.current || !isPlayingRef.current) return;
+    
+    console.log('Playing thunderstorm overlay...');
+    
+    // Reset thunderstorm audio
+    thunderstormAudioRef.current.currentTime = 0;
+    thunderstormAudioRef.current.volume = 0;
+    
+    thunderstormAudioRef.current.play().then(() => {
+      // Fade in thunderstorm over rain
+      fadeIn(thunderstormAudioRef.current!, THUNDERSTORM_VOLUME);
+      
+      // Fade out thunderstorm after it plays (duration-based)
+      const thunderDuration = thunderstormAudioRef.current!.duration;
+      const fadeOutStart = Math.max(thunderDuration - FADE_DURATION, thunderDuration * 0.7);
+      
+      setTimeout(() => {
+        if (thunderstormAudioRef.current && !thunderstormAudioRef.current.paused) {
+          fadeOut(thunderstormAudioRef.current);
+        }
+      }, fadeOutStart * 1000);
+      
+    }).catch((error) => {
+      console.error('Error playing thunderstorm overlay:', error);
+    });
+  };
+
+  const fadeIn = (audio: HTMLAudioElement, targetVolume: number = 0.7) => {
     const steps = 60; // 60 steps for smooth fade
     const stepDuration = (FADE_DURATION * 1000) / steps;
-    const volumeStep = 0.7 / steps; // Target volume 0.7
+    const volumeStep = targetVolume / steps;
     let currentStep = 0;
     
     const fadeInterval = setInterval(() => {
@@ -150,19 +223,45 @@ export const useAudioMixer = () => {
       }
       
       currentStep++;
-      audio.volume = Math.min(volumeStep * currentStep, 0.7);
+      audio.volume = Math.min(volumeStep * currentStep, targetVolume);
       
       if (currentStep >= steps) {
         clearInterval(fadeInterval);
-        audio.volume = 0.7;
+        audio.volume = targetVolume;
       }
     }, stepDuration);
   };
 
-  const crossfade = (currentAudio: HTMLAudioElement, nextAudio: HTMLAudioElement) => {
+  const fadeOut = (audio: HTMLAudioElement) => {
+    const steps = 60;
+    const stepDuration = (FADE_DURATION * 1000) / steps;
+    const initialVolume = audio.volume;
+    const volumeStep = initialVolume / steps;
+    let currentStep = 0;
+    
+    const fadeInterval = setInterval(() => {
+      if (audio.paused) {
+        clearInterval(fadeInterval);
+        return;
+      }
+      
+      currentStep++;
+      audio.volume = Math.max(initialVolume - (volumeStep * currentStep), 0);
+      
+      if (currentStep >= steps || audio.volume <= 0.01) {
+        clearInterval(fadeInterval);
+        audio.pause();
+        audio.currentTime = 0;
+        audio.volume = 0;
+      }
+    }, stepDuration);
+  };
+
+  const crossfade = (currentAudio: HTMLAudioElement, nextAudio: HTMLAudioElement, currentTargetVolume: number = 0.7, nextTargetVolume: number = 0.7) => {
     const steps = 60; // 60 steps for ultra-smooth crossfade
     const stepDuration = (FADE_DURATION * 1000) / steps;
-    const volumeStep = 0.7 / steps;
+    const currentVolumeStep = currentTargetVolume / steps;
+    const nextVolumeStep = nextTargetVolume / steps;
     let currentStep = 0;
     
     console.log('Starting crossfade...');
@@ -178,12 +277,12 @@ export const useAudioMixer = () => {
       
       // Fade out current track
       if (!currentAudio.paused) {
-        currentAudio.volume = Math.max(0.7 * (1 - progress), 0);
+        currentAudio.volume = Math.max(currentTargetVolume * (1 - progress), 0);
       }
       
       // Fade in next track
       if (!nextAudio.paused) {
-        nextAudio.volume = Math.min(0.7 * progress, 0.7);
+        nextAudio.volume = Math.min(nextTargetVolume * progress, nextTargetVolume);
       }
       
       if (currentStep >= steps) {
@@ -194,27 +293,32 @@ export const useAudioMixer = () => {
         currentAudio.currentTime = 0;
         currentAudio.volume = 0;
         
-        nextAudio.volume = 0.7;
+        nextAudio.volume = nextTargetVolume;
         console.log('Crossfade completed');
       }
     }, stepDuration);
   };
 
-  const stopOverlappingPlayback = () => {
-    console.log('Stopping overlapping audio playback...');
+  const stopAudioSystem = () => {
+    console.log('Stopping rain + thunderstorm audio system...');
     isPlayingRef.current = false;
     setIsPlaying(false);
     
     // Clear any pending timeouts
-    if (overlapTimeoutRef.current) {
-      clearTimeout(overlapTimeoutRef.current);
-      overlapTimeoutRef.current = null;
+    if (rainOverlapTimeoutRef.current) {
+      clearTimeout(rainOverlapTimeoutRef.current);
+      rainOverlapTimeoutRef.current = null;
     }
     
-    // Stop all audio instances
-    audioInstancesRef.current.forEach((audio, index) => {
+    if (thunderstormTimeoutRef.current) {
+      clearTimeout(thunderstormTimeoutRef.current);
+      thunderstormTimeoutRef.current = null;
+    }
+    
+    // Stop all rain audio instances
+    rainAudioInstancesRef.current.forEach((audio, index) => {
       if (!audio.paused) {
-        console.log(`Stopping audio instance ${index}`);
+        console.log(`Stopping rain audio instance ${index}`);
         
         // Fade out quickly
         const fadeSteps = 20;
@@ -234,20 +338,34 @@ export const useAudioMixer = () => {
         }, fadeInterval);
       }
     });
+    
+    // Stop thunderstorm audio
+    if (thunderstormAudioRef.current && !thunderstormAudioRef.current.paused) {
+      console.log('Stopping thunderstorm audio');
+      fadeOut(thunderstormAudioRef.current);
+    }
   };
 
   const cleanup = () => {
     console.log('Cleaning up audio system...');
-    stopOverlappingPlayback();
+    stopAudioSystem();
     
-    // Clean up all audio instances
-    audioInstancesRef.current.forEach((audio) => {
+    // Clean up all rain audio instances
+    rainAudioInstancesRef.current.forEach((audio) => {
       audio.pause();
       audio.src = '';
       audio.load();
     });
     
-    audioInstancesRef.current = [];
+    // Clean up thunderstorm audio
+    if (thunderstormAudioRef.current) {
+      thunderstormAudioRef.current.pause();
+      thunderstormAudioRef.current.src = '';
+      thunderstormAudioRef.current.load();
+      thunderstormAudioRef.current = null;
+    }
+    
+    rainAudioInstancesRef.current = [];
   };
 
   // Handle page visibility change to maintain playback
@@ -259,11 +377,11 @@ export const useAudioMixer = () => {
       } else {
         console.log('Page visible - ensuring audio continues');
         // Ensure audio is still playing when tab becomes visible
-        if (isPlayingRef.current && audioInstancesRef.current.length > 0) {
-          const anyPlaying = audioInstancesRef.current.some(audio => !audio.paused);
+        if (isPlayingRef.current && rainAudioInstancesRef.current.length > 0) {
+          const anyPlaying = rainAudioInstancesRef.current.some(audio => !audio.paused);
           if (!anyPlaying) {
             console.log('Restarting audio after visibility change');
-            startOverlappingPlayback();
+            startAudioSystem();
           }
         }
       }
@@ -277,7 +395,7 @@ export const useAudioMixer = () => {
   useEffect(() => {
     const handleBeforeUnload = () => {
       console.log('Page unloading - stopping audio');
-      stopOverlappingPlayback();
+      stopAudioSystem();
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
@@ -287,13 +405,15 @@ export const useAudioMixer = () => {
   return {
     isPlaying,
     isLoaded,
-    startMixedPlayback: startOverlappingPlayback,
-    stopMixedPlayback: stopOverlappingPlayback,
+    startMixedPlayback: startAudioSystem,
+    stopMixedPlayback: stopAudioSystem,
     config: {
       masterVolume: 0.7,
+      thunderstormVolume: THUNDERSTORM_VOLUME,
       overlapDuration: OVERLAP_DURATION,
-      fadeDuration: FADE_DURATION
+      fadeDuration: FADE_DURATION,
+      thunderstormInterval: THUNDERSTORM_INTERVAL
     },
-    currentTrack: currentIndexRef.current
+    currentRainTrack: currentRainIndexRef.current
   };
 };

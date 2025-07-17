@@ -150,26 +150,32 @@ function App() {
                     opacity: 1, 
                     y: 0, 
                     scale: 1,
-                    rotateX: [0, 0.5, 0, -0.3, 0]
+                    rotateX: [0, 0.3, 0, -0.2, 0],
+                    rotateY: [0, 0.1, 0, -0.1, 0]
                   }}
                   transition={{ 
-                    duration: 3, 
-                    delay: 2,
+                    duration: 4, 
+                    delay: 1.8,
                     ease: "easeOut"
                   }}
                   data-aos="zoom-in"
-                  data-aos-delay="2000"
+                  data-aos-delay="1800"
                 >
                   <motion.div 
                     className="studio-sign-on-building"
                     animate={{
                       boxShadow: [
-                        '0 0 15px rgba(255, 100, 150, 0.6), 0 0 30px rgba(100, 200, 255, 0.4)',
-                        '0 0 20px rgba(255, 100, 150, 0.8), 0 0 40px rgba(100, 200, 255, 0.6)',
-                        '0 0 18px rgba(255, 100, 150, 0.7), 0 0 35px rgba(100, 200, 255, 0.5)'
+                        '0 0 12px rgba(255, 100, 150, 0.7), 0 0 25px rgba(100, 200, 255, 0.5), 0 2px 6px rgba(0, 0, 0, 0.8)',
+                        '0 0 18px rgba(255, 100, 150, 0.9), 0 0 35px rgba(100, 200, 255, 0.7), 0 2px 8px rgba(0, 0, 0, 0.9)',
+                        '0 0 15px rgba(255, 100, 150, 0.8), 0 0 30px rgba(100, 200, 255, 0.6), 0 2px 7px rgba(0, 0, 0, 0.85)'
+                      ],
+                      transform: [
+                        'perspective(500px) rotateX(2deg) rotateY(0deg)',
+                        'perspective(500px) rotateX(2.5deg) rotateY(0.5deg)',
+                        'perspective(500px) rotateX(1.5deg) rotateY(-0.3deg)'
                       ]
                     }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                   >
                     {/* Enhanced sign frame with metal details */}
                     <div className="sign-frame-details">
@@ -203,26 +209,26 @@ function App() {
                     
                     {/* Enhanced neon tube effects */}
                     <div className="neon-tubes-building">
-                      {Array.from({ length: 12 }, (_, tubeIndex) => (
+                      {Array.from({ length: 10 }, (_, tubeIndex) => (
                         <motion.div
                           key={`tube-building-${tubeIndex}`}
                           className="neon-tube-building"
                           animate={{
-                            opacity: [0.6, 1, 0.8, 1],
-                            scale: [1, 1.02, 0.98, 1]
+                            opacity: [0.7, 1, 0.85, 1],
+                            scale: [1, 1.01, 0.99, 1]
                           }}
                           transition={{
-                            duration: 2 + Math.random() * 2,
-                            delay: tubeIndex * 0.2,
+                            duration: 2.5 + Math.random() * 1.5,
+                            delay: tubeIndex * 0.15,
                             repeat: Infinity,
                             ease: "easeInOut"
                           }}
                           style={{
-                            left: `${5 + (tubeIndex % 6) * 15}%`,
-                            top: tubeIndex < 6 ? '10%' : '80%',
+                            left: `${8 + (tubeIndex % 5) * 16}%`,
+                            top: tubeIndex < 5 ? '15%' : '75%',
                             background: tubeIndex % 2 === 0 ? 
-                              'linear-gradient(90deg, rgba(255, 100, 150, 0.8), rgba(255, 150, 200, 0.6))' :
-                              'linear-gradient(90deg, rgba(100, 200, 255, 0.8), rgba(150, 220, 255, 0.6))'
+                              'linear-gradient(90deg, rgba(255, 100, 150, 0.9), rgba(255, 150, 200, 0.7))' :
+                              'linear-gradient(90deg, rgba(100, 200, 255, 0.9), rgba(150, 220, 255, 0.7))'
                           }}
                         />
                       ))}
@@ -230,7 +236,7 @@ function App() {
                     
                     {/* Enhanced electric sparks */}
                     <div className="electric-sparks-building">
-                      {Array.from({ length: 15 }, (_, sparkIndex) => (
+                      {Array.from({ length: 12 }, (_, sparkIndex) => (
                         <motion.div
                           key={`spark-building-${sparkIndex}`}
                           className="electric-spark-building"
@@ -240,7 +246,7 @@ function App() {
                             rotate: [0, 180, 360]
                           }}
                           transition={{
-                            duration: 0.5 + Math.random() * 0.8,
+                            duration: 0.4 + Math.random() * 0.6,
                             delay: Math.random() * 4,
                             repeat: Infinity,
                             ease: "easeOut"
