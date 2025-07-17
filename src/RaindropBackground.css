@@ -160,46 +160,56 @@
   clip-path: polygon(0 100%, 0 35%, 15% 30%, 85% 30%, 100% 35%, 100% 100%);
 }
 
-/* City lights */
-.city-lights {
+/* Building windows system */
+.building-windows {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 1;
 }
 
-.window-light {
+.realistic-window {
   position: absolute;
-  width: 3px;
-  height: 4px;
-  background: rgba(255, 220, 120, 0.8);
+  width: 4px;
+  height: 6px;
+  background: rgba(100, 150, 200, 0.6);
+  border: 0.5px solid rgba(80, 120, 160, 0.8);
+  border-radius: 1px;
   box-shadow: 
-    0 0 8px rgba(255, 220, 120, 0.6),
-    0 0 15px rgba(255, 220, 120, 0.3);
-  animation: windowFlicker 8s ease-in-out infinite;
+    inset 0 0 2px rgba(255, 255, 255, 0.1),
+    0 0 4px rgba(100, 150, 200, 0.3);
+  transition: all 0.3s ease;
 }
 
-@keyframes windowFlicker {
-  0%, 100% { opacity: 0.8; }
-  25% { opacity: 1; }
-  50% { opacity: 0.6; }
-  75% { opacity: 0.9; }
+.realistic-window:nth-child(3n) {
+  background: rgba(255, 220, 120, 0.7);
+  box-shadow: 
+    inset 0 0 2px rgba(255, 255, 255, 0.2),
+    0 0 6px rgba(255, 220, 120, 0.4);
 }
 
-/* Axie Studio backdrop */
-.axie-studio-backdrop {
+.realistic-window:nth-child(5n) {
+  background: rgba(255, 180, 100, 0.6);
+  box-shadow: 
+    inset 0 0 2px rgba(255, 255, 255, 0.15),
+    0 0 5px rgba(255, 180, 100, 0.3);
+}
+
+/* Axie Studio sign on building */
+.axie-studio-on-building {
   position: absolute;
-  top: 35%;
+  top: 40%;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  height: 30px;
-  z-index: 4;
+  width: 60px;
+  height: 18px;
+  z-index: 5;
   perspective: 1000px;
 }
 
-.studio-sign {
+.studio-sign-on-building {
   position: relative;
   width: 100%;
   height: 100%;
@@ -207,29 +217,29 @@
     rgba(20, 20, 30, 0.95) 0%,
     rgba(30, 30, 40, 0.9) 50%,
     rgba(15, 15, 25, 0.98) 100%);
-  border: 3px solid rgba(100, 200, 255, 0.6);
-  border-radius: 15px;
+  border: 2px solid rgba(100, 200, 255, 0.6);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   box-shadow: 
-    0 0 30px rgba(255, 100, 150, 0.6),
-    0 0 60px rgba(100, 200, 255, 0.4),
+    0 0 15px rgba(255, 100, 150, 0.6),
+    0 0 30px rgba(100, 200, 255, 0.4),
     inset 0 0 20px rgba(0, 0, 0, 0.8);
 }
 
-.studio-text {
+.studio-text-on-building {
   font-family: 'Arial Black', Arial, sans-serif;
-  font-size: 0.625rem;
+  font-size: 0.4rem;
   font-weight: 900;
   color: #ffffff;
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   margin: 0;
   text-shadow: 
-    0 0 5px rgba(255, 100, 150, 0.8),
-    0 0 10px rgba(100, 200, 255, 0.6),
+    0 0 3px rgba(255, 100, 150, 0.8),
+    0 0 6px rgba(100, 200, 255, 0.6),
     0 1px 2px rgba(0, 0, 0, 0.8);
   background: linear-gradient(45deg,
     #ff6496 0%,
@@ -244,12 +254,7 @@
   animation: gradientShift 3s ease-in-out infinite;
 }
 
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.neon-tubes {
+.neon-tubes-building {
   position: absolute;
   top: 0;
   left: 0;
@@ -258,88 +263,72 @@
   pointer-events: none;
 }
 
-.neon-tube {
+.neon-tube-building {
   position: absolute;
-  top: 2px;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  box-shadow: 
-    0 0 10px currentColor,
-    0 0 20px currentColor,
-    0 0 30px currentColor;
-}
-
-.electric-sparks {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.electric-spark {
-  position: absolute;
+  top: 1px;
   width: 1px;
   height: 1px;
+  border-radius: 50%;
+  box-shadow: 
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 15px currentColor;
+}
+
+.electric-sparks-building {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.electric-spark-building {
+  position: absolute;
+  width: 0.5px;
+  height: 0.5px;
   background: radial-gradient(circle,
     rgba(255, 255, 255, 1) 0%,
     rgba(100, 200, 255, 0.8) 50%,
     transparent 100%);
   border-radius: 50%;
   box-shadow: 
-    0 0 2px rgba(255, 255, 255, 0.8),
-    0 0 4px rgba(100, 200, 255, 0.6);
+    0 0 1px rgba(255, 255, 255, 0.8),
+    0 0 2px rgba(100, 200, 255, 0.6);
 }
 
-.studio-frame {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  pointer-events: none;
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
-.frame-corner {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border: 1px solid rgba(255, 100, 150, 0.8);
+/* Second car styling */
+.car-second {
+  bottom: 35%; /* Slightly different position */
 }
 
-.frame-top-left {
-  top: 0;
-  left: 0;
-  border-right: none;
-  border-bottom: none;
-  border-radius: 2px 0 0 0;
+.car-body-second {
+  background: linear-gradient(135deg,
+    rgba(60, 40, 80, 0.9) 0%,
+    rgba(50, 30, 70, 0.95) 50%,
+    rgba(40, 20, 60, 1) 100%) !important;
 }
 
-.frame-top-right {
-  top: 0;
-  right: 0;
-  border-left: none;
-  border-bottom: none;
-  border-radius: 0 2px 0 0;
+.car-roof-second {
+  background: linear-gradient(135deg,
+    rgba(55, 35, 75, 0.9) 0%,
+    rgba(45, 25, 65, 0.95) 50%,
+    rgba(35, 15, 55, 1) 100%) !important;
 }
 
-.frame-bottom-left {
-  bottom: 0;
-  left: 0;
-  border-right: none;
-  border-top: none;
-  border-radius: 0 0 0 2px;
+.car-reflection-second {
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(120, 100, 150, 0.15) 50%,
+    transparent 100%) !important;
 }
 
-.frame-bottom-right {
-  bottom: 0;
-  right: 0;
-  border-left: none;
-  border-top: none;
-  border-radius: 0 0 2px 0;
-}
 
 /* Street and road */
 .street {
